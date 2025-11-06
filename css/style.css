@@ -1,0 +1,215 @@
+
+:root {
+  --main-bg: #fefaf2;
+  --sidebar-bg: #f5e7cd;
+  --card-bg: #fffaf3;
+  --text-dark: #4a3f2d;
+  --accent: #b98b4d;
+  --hover: #e8d7b6;
+}
+
+/* admin */
+
+
+/* login */
+#login {
+  min-height: 100vh;
+  background-color: var(--main-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginLogo img {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.loginForm {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f2e5d3;
+}
+
+.loginForm input {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px 40px 10px 10px;
+  border-radius: 8px;
+}
+
+.iconRole, 
+.iconPostlock {
+  top: 50%;
+  right: 15%;
+  transform: translateY(-50%);
+  font-size: 16px;
+}
+
+.colorFont {
+  color: var(--accent);
+}
+
+#btnLogin {
+  background-color: var(--accent);
+  color: #fff;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+#btnLogin:hover {
+  background-color: #a6783f;
+  transform: scale(1.05);
+}
+
+.loginFooter {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  font-size: 14px;
+  color: var(--text-dark);
+  opacity: 0.8;
+}
+
+
+
+body {
+  background-color: var(--main-bg);
+  color: var(--text-dark);
+  font-family: 'Cairo', sans-serif;
+  direction: rtl;
+}
+
+/* navSide */
+.navSide {
+  background-color: var(--sidebar-bg);
+  padding: 20px 0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 100vh;
+  transition: all 0.3s ease;
+}
+
+.navSide-img img {
+  width: 70px;
+  margin-bottom: 20px;
+}
+
+.navSide ul li {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  color: var(--text-dark);
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.navSide ul li:hover {
+  background-color: var(--hover);
+  color: var(--accent);
+}
+
+.navSide ul li i {
+  color: var(--accent);
+  font-size: 18px;
+}
+
+h1, h2, h3, h4, h5 {
+  color: var(--text-dark);
+}
+
+.collectMoney, .allpaid, .topMonth {
+  background-color: var(--card-bg);
+  border: 1px solid #f2e5d3;
+  color: var(--text-dark);
+  transition: 0.3s ease;
+}
+
+.collectMoney:hover, .allpaid:hover, .topMonth:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.08);
+}
+
+
+.table {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table thead {
+  background-color: var(--hover);
+  color: var(--text-dark);
+}
+
+.table tbody tr:hover {
+  background-color: #f9f2e4;
+}
+
+
+.btn {
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #a6783f;
+  transform: scale(1.05);
+}
+
+
+.icon {
+  color: var(--accent);
+}
+
+
+body.dark-mode {
+  --main-bg: #1c1c1c;
+  --sidebar-bg: #2a2a2a;
+  --card-bg: #333;
+  --text-dark: #f3f3f3;
+  --accent: #cba86b;
+  --hover: #444;
+}
+
+body.dark-mode .navSide {
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+
+.dark-toggle {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dark-toggle:hover {
+  color: var(--text-dark);
+  transform: rotate(15deg);
+}
+
+@media (max-width: 992px) {
+  .navSide {
+    height: auto;
+    border-radius: 0;
+  }
+
+  .choosePage li {
+    justify-content: center;
+    text-align: center;
+  }
+
+  #dashBord .row {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>beaker</title>
+    <link rel="stylesheet" href="bootstap/bootstrap.min.css">
+    <link rel="stylesheet" href="icon/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+ 
+
+
+
+
+    <section id="login" class="d-flex">
+        <div class="container">
+            <div class="loginLogo  d-flex flex-column justify-content-center align-items-center pb-5">
+                <img src="assets/loginLogo.png" width="100px" alt="">
+                <h2 class="colorFont">Bread CRUD</h2>
+            </div>
+
+            <div class="loginForm w-75  rounded-3  text-center mx-auto p-4">
+                <h3 class="colorFont">registration</h3>
+                <div class="roleInput position-relative">
+                <input id="roleInp" class="form-control my-3 w-75 mx-auto px-5" placeholder="Enter Your Role" type="text">
+                <i class="fa-solid fa-user-secret position-absolute iconRole colorFont "></i>
+                </div>
+                <div class="lockInput position-relative">
+                    <input id="passInput" class="form-control mb-3 w-75 mx-auto px-5" placeholder="Enter Your password" type="password">
+                    <i class="fa-solid fa-lock position-absolute  iconPostlock colorFont"></i>
+                </div>
+                
+                <button id="btnLogin" class="btn  d-block my-3 mx-auto w-25">login</button>
+
+            </div>
+        </div>
+        
+        <div class="loginFooter d-flex justify-content-center pt-4 align-items-center">
+            <p class=" mt-4 px-3">Baker Of El Kaber</p>
+            <img src="assets/loginLogo.png" width="30" alt="">
+        </div>
+        
+    </section>
+
+    <section id="dashBord" class="position-relative d-none">
+       
+            <div class="row shadow h-100  w-100  bg-main-dash rounded-3  d-flex  justify-content-between">
+
+                <!-- Recovering old data -->
+<div class="backup-buttons my-3 text-center admin">
+    <button class="btn btn-danger" id="deleteAll">Delete All Data</button>
+    <button id="backupBtn" class="btn btn-success mx-2">💾 حفظ نسخة احتياطية</button>
+    <button id="restoreBtn" class="btn btn-warning mx-2">🔁 استرجاع نسخة احتياطية</button>
+    <input type="file" id="restoreFile" accept=".json" class="d-none">
+</div>
+
+                <div class="col-md-3">
+                    
+                    <div class="navSide rounded-3 h-100  ">
+                        <button class="dark-toggle" id="darkModeBtn">
+                            <i class="fa-solid fa-moon"></i>
+                        </button>
+                        <div class="navSide-img  text-center">
+                            <img src="assets/loginLogo.png" width="80" alt="">
+                        </div>
+                        <ul class="list-unstyled choosePage">
+                            <li data-dash="#mainPage"><i class="fa-solid fa-house ps-5 me-3"></i><span>الرئيسية</span></li>
+                            <li data-dash="#merchant"><i class="fa-solid fa-user ps-5 me-3"></i><span>التجار</span></li>
+                            <li data-dash="#paid"><i class="fa-solid fa-hand-holding-dollar ps-5 me-3"></i><span>التحصيل</span></li>
+                            <li data-dash="#fees"><i class="fa-solid fa-money-bill-wave ps-5 me-3"></i><span>المصاريف</span></li>
+                            <li data-dash="#prevMonth"><i class="fa-solid fa-signal ps-5 me-3"></i><span>التقارير الشهرية</span></li>
+                            <li data-dash="#login"><i class="fa-solid fa-arrow-right-from-bracket ps-5 me-3"></i><span>تسجيل
+                                    الخروج</span></li>
+                        </ul>
+                    </div>
+                </div>
+               
+                <div class="col-md-9 col-sm-12  d-flex justify-content-center align-items-center ">
+                    <div id="displayPages" class="w-100">
+                        <div id="mainPage" >
+                        
+                            <div class=" w-100 vh-100 d-flex flex-column justify-content-evenly">
+                                <div class="dashboard-mainPage">
+                                    <header>
+                                        <div class="dashboard-title  d-flex justify-content-between align-items-center">
+                                            <h1>ادارة المشروع</h1>
+                                            <div class="dashBoard-role"><span id="role" class="fs-4">Admin</span><i
+                                                    class="fa-regular fa-circle-user px-3 fs-4 icon"></i> </div>
+                                        </div>
+                                    </header>
+                                </div>
+                        <div class="dashboard-middPage">
+                            <div class="row">
+                                <div class="col-md-4 p-3">
+                                    <div class="collectMoney shadow rounded-3 p-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="py-3">
+                                            <i class="fa-solid fa-coins icon fs-4"></i>
+                                            <span class="fs-5" >اجمالي المستحق</span>
+                                        </div>
+                                        <h3 id="totalAll" class="fontColor">0</h3>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-md-4 p-3">
+                                    <div class="allpaid shadow rounded-3 p-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="py-3">
+                                            <i class="fa-solid fa-hand-holding-dollar icon fs-4"></i>
+                                            <span class="fs-5" >اجمالي المدفوع</span>
+                                        </div>
+                                        <h3 id="paidAll" class="fontColor">0</h3>
+                                    </div>
+                                </div>
+                        
+                                <div class="col-md-4 p-3">
+                                    <div class="collectMoney shadow rounded-3 p-4 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="py-3">
+                                            <i class="fa-solid fa-signal icon fs-4"></i>
+                                            <span class="fs-5">اجمالي المتبقي</span>
+                                        </div>
+                                        <h3 id="remainingAll" class="fontColor">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                <div class="addNewMerchant p-3">
+                                    <div class="col-md-12 p-3">
+                                        <div class="topMonth shadow rounded-3 p-4 d-flex flex-column justify-content-center align-items-center ">
+                                            <div class="py-3">
+                                                <i class="fa-solid fa-trophy icon fs-4"></i>
+                                                <span class="fs-5">أعلى شهر تم دفع فيه فلوس</span>
+                                            </div>
+                                            <h3 id="topMonthName" class="fontColor">-</h3>
+                                            <h4 id="topMonthValue" class="fontColor">0</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                                <div class="tableMain-page p-3">
+                                    <table class="table rounded-2 ">
+                                        <thead class="text-center" id="table-head">
+                                            <tr>
+                                                <th>الترتيب</th>
+                                                <th>التاجر</th>
+                                                <th>العنوان</th>
+                                                <th>الاجمالي</th>
+                                                <th>المتبقي</th>
+                                            </tr>
+                                        </thead>
+                        
+                                        <tbody id="tbodyDashboard" class="text-center">
+                                          
+                                        </tbody>
+                                    </table>
+                        
+                                </div>
+                        
+                        
+                        
+                        
+                            </div>
+                        
+                        
+                        </div>
+                    
+
+</div>
+
+                </div>
+            </div>
+        
+    </section>
+
+    <section   id="merchant" class="d-none overflow-scroll ">
+        <div class="container p-4 ">
+            <h3 class="text-center">All Merchant</h3>
+                <div class="merchantForm">
+                    <label for="merchantName" class=" fs-4 pt-3">Merchant Name</label>
+                <input  placeholder="اسم التاجر" id="merchantName" class="form-control mt-3" type="text">
+
+                    <label for="merchantPhone" class=" fs-4 pt-3">Merchant phone</label>
+                <input placeholder="رقم الهاتف" id="merchantPhone" class="form-control mt-3" type="text">
+
+                    <label for="merchantAddress" class=" fs-4 pt-3">Merchant Address</label>
+                <input placeholder="عنوان التاجر" id="merchantAddress" class="form-control mt-3" type="text">
+
+                  
+                 
+
+                 <div class="addMerchant pt-4">
+                    <button id="addBtnMrc" class="btn btn-add  w-100">Add</button>
+                    <button id="updateBtn" class="btn btn-add w-100 d-none">Update</button>
+                 </div>
+                </div>
+
+                <div class="merchantTable pt-3">
+
+                <div class="tableMain-page p-3 ">
+                    <table class="table rounded-2">
+                        <thead class="text-center" id="table-head">
+                            <tr>
+                                
+                                <th>ترتيب</th>
+                                <th>التاجر</th>
+                                <th>رقم الهاتف</th>
+                                <th> عنوان التاجر</th>
+                               
+                                <th class="admin">Update</th>
+                                <th class="admin">Delete</th>
+                                <th class="">Open</th>
+                            </tr>
+                        </thead>
+                
+                        <tbody id="tbodyMerchants" class="text-center tableMerchants">
+                            
+                        </tbody>
+                    </table>
+                
+                </div>
+
+
+                </div>
+
+
+        </div>
+
+    </section>
+
+    <section  id="paid" class="d-none">
+  <h2 class=" p-3">صافي الربح علي مدار  كل الشهور</h2>
+
+
+
+        <div class="container mt-5 p-5">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="card shadow p-3">
+                        <h5>إجمالي المدفوع من كل التجار</h5>
+                        <h3 id="totalPaidAll" class="text-primary">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow p-3">
+                        <h5>إجمالي المصاريف</h5>
+                        <h3 id="totalExpensesAll" class="text-danger">0</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow p-3">
+                        <h5>صافي الأرباح بعد المصاريف</h5>
+                        <h3 id="netProfit" class="text-success">0</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </section>
+
+    <section id="fees" class="d-none">
+<h1>fees</h1>
+
+<div class="container mt-4">
+    <select id="monthSelect" class="form-select w-50 mx-auto mb-4">
+            <option value="">اختر الشهر</option>
+            <option value="January">يناير</option>
+            <option value="February">فبراير</option>
+            <option value="March">مارس</option>
+            <option value="April">أبريل</option>
+            <option value="May">مايو</option>
+            <option value="June">يونيو</option>
+            <option value="July">يوليو</option>
+            <option value="August">أغسطس</option>
+            <option value="September">سبتمبر</option>
+            <option value="October">أكتوبر</option>
+            <option value="November">نوفمبر</option>
+            <option value="December">ديسمبر</option>
+    </select>
+
+    <div class="row text-center mb-4">
+        <div class="col-md-6">
+            <div class="card shadow p-3">
+                <h5>إجمالي المدفوع في الشهر</h5>
+                <h3 id="monthTotal" class="text-primary">0</h3>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow p-3">
+                <h5>الإجمالي بعد خصم المصاريف</h5>
+                <h3 id="afterExpensesTotal" class="text-success">0</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2 justify-content-center mb-3">
+        <input type="date" id="expenseDate" class="form-control w-25">
+        <input type="number" id="expenseAmount" class="form-control w-25" placeholder="مبلغ المصروف">
+        <input type="text" id="expenseDetails" class="form-control w-25" placeholder="تفاصيل المصروف">
+        <button id="addExpense" class="btn btn-success">إضافة</button>
+    </div>
+
+<table class="table table-bordered mt-3">
+    <thead>
+        <tr>
+            <th>التاريخ</th>
+            <th>المبلغ</th>
+            <th>التفاصيل</th>
+            <th>الإجمالي قبل المصروف</th>
+            <th>الإجمالي بعد المصروف</th>
+            <th>إجراء</th> <!-- زرار المسح -->
+        </tr>
+    </thead>
+    <tbody id="expensesTableBody" class="text-center">
+        <!-- المصاريف بتتعرض هنا -->
+    </tbody>
+</table>
+
+</div>
+
+
+
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="prevMonth" class="d-none">
+
+<div class="container my-4">
+    <h2 class="text-center mb-4">📊 التقارير الشهرية</h2>
+
+    <div class="mb-4 text-center">
+        <select id="selectMonth" class="form-select w-auto d-inline-block">
+            <option value="">اختر الشهر</option>
+            <option value="January">يناير</option>
+            <option value="February">فبراير</option>
+            <option value="March">مارس</option>
+            <option value="April">أبريل</option>
+            <option value="May">مايو</option>
+            <option value="June">يونيو</option>
+            <option value="July">يوليو</option>
+            <option value="August">أغسطس</option>
+            <option value="September">سبتمبر</option>
+            <option value="October">أكتوبر</option>
+            <option value="November">نوفمبر</option>
+            <option value="December">ديسمبر</option>
+        </select>
+    </div>
+
+    <!-- كروت الشهر المحدد -->
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card  text-white p-3">
+                <h4>إجمالي اللي على التجار</h4>
+                <h3 id="totalAllMerchants">0</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card  text-white p-3">
+                <h4>إجمالي المدفوع</h4>
+                <h3 id="totalPaidMerchants">0</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card  text-white p-3">
+                <h4>إجمالي المتبقي</h4>
+                <h3 id="totalRemainingMerchants">0</h3>
+            </div>
+        </div>
+    </div>
+ 
+
+
+    <hr class="my-4">
+
+    <!-- كارت لكل الشهور -->
+    <div class="text-center  p-4 rounded">
+        <h4>💰 إجمالي المبالغ المدفوعة خلال كل الشهور</h4>
+        <h2 id="totalPaidAllMonths">0</h2>
+    </div>
+</div>
+
+
+
+
+
+    </section>
+
+<section id="newSpcMerchantPage" class="d-none pt-4">
+    <div class="container">
+        <div class="whichMerchant">
+            <h2>اسم التاجر : <span id="nameOfMerchant">ahmed</span></h2>
+        </div>
+        <div class="tabsMonth">
+
+            <div class="spcMerchantInputs">
+                <label for="dateOfTransaction" class="py-3">تاريخ العملية</label>
+                <input type="date" id="dateOfTransaction" placeholder=" تاريخ العملية" class="form-control" disabled>
+
+                <label for="countOfBread" class="py-3">عددالعيش</label>
+                <input type="number" id="countOfBread" placeholder="عددالعيش" class="form-control" disabled>
+
+                <label for="amountPaid" class="py-3">المبلغ المدفوع</label>
+                <input type="number" id="amountPaid"  placeholder="المبلغ المدفوع" class="form-control" disabled>
+                <div class="PriceOfBread  pt-4">
+                    <label for="priceOfBreadInput">سعر العيش :</label>
+                    <input  class="mx-4 form-control w-25 d-inline-block" id="priceInput" type="number" placeholder="سعر العيش" disabled>
+                    <span id="lastPrice" class="p-4 ">اخر سعر ضفتة</span>
+                    <button id="btnAddPrice" class="btn btn-outline-success admin">Add Price</button>
+                </div>
+                <button id="addSpcMerData" class="btn btn-add text-white w-100 my-3">أضافة</button>
+                <button id="updateSpcMerData" class="btn btn-success w-100 my-3 d-none">تحديث</button>
+            </div>
+            <div id="chooseMonth" class="text-center">
+                <h2 class="text-danger">اختار الشهر لظهور البينات </h2>
+                <i class="fa-solid fa-arrow-circle-down text-danger fs-4"></i>
+            </div>
+             <div class="months  my-4">
+                <ul id="monthInfo" class="list-unstyled d-flex justify-content-between align-items-center">
+                
+                </ul>
+             </div>
+
+             <div class="spcMonthOfTable w-100  d-none">
+                <table class="table-bordered w-100 text-center">
+                    <thead class="rounded-2">
+                        <tr>
+                            <th class="">الترتيب</th>
+                            <th>الاسم</th>
+                            <th>تاريخ العمالية</th>
+                            <th>عدد العيش </th>
+                            <th>سعر الرغيف وقت العمالية </th>
+                            <th> جمالي سعر العيش </th>
+                            <th>المبلغ المدفوع</th>
+                            <th> المتبقي  من الحركة </th>
+                            <th class="admin">Update</th>
+                            <th class="admin">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodySpc">
+                        <tr>
+                            <td>1</td>
+                            <td>احمد</td>
+                            <td>5/1/2025</td>
+                            <td>2000</td>
+                            <td>جملي السعر5000</td>
+                            <td>المبلغ المدفوع 1000</td>
+                            <td>المتبقي 4000</td>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
+           
+           <div class="prices">
+            <div class="row">
+                <div class="col-md-4  p-3 ">
+                    <div class="allMony  bg-secondary  p-3 d-flex justify-content-around align-items-center flex-column">
+                        <h3>اجمالي العلي التاجر</h3>
+                     <h4 class="pt-3">3</h4>
+                    </div>
+                </div>
+                <div class="col-md-4  p-3 ">
+                    <div class="allMony bg-success  p-3 d-flex justify-content-around align-items-center flex-column">
+                        <h3>اجمالي المدفوع </h3>
+
+                     <h4 class="pt-3">3</h4>
+                    </div>
+                </div>
+                <div class="col-md-4  p-3 ">
+                    <div class="allMony bg-warning  p-3 d-flex justify-content-around align-items-center flex-column">
+                        <h3>اجمالي المتبقي</h3>
+
+                     <h4 class="pt-3">3</h4>
+                    </div>
+                </div>
+            </div>
+           </div>
+        </div>
+    </div>
+</section>
+
+    
+
+
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="icon/all.min.js"></script>
+    <script src="bootstap/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
