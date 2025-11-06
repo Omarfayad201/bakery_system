@@ -198,6 +198,16 @@ body.dark-mode .navSide {
   transform: rotate(15deg);
 }
 
+body.dark-mode #monthInfo {
+  background-color: var(--card-bg);
+  color: var(--text-dark);
+}
+
+body.dark-mode #monthInfo {
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+
 @media (max-width: 992px) {
   .navSide {
     height: auto;
