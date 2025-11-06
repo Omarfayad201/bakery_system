@@ -111,34 +111,33 @@ function clearInputValue() {
   merchantAddress.val("")
   }
 
+// إضافة تاجر جديد
 $("#addBtnMrc").click(() => {
+  if (merchantName.val() !== "" && merchantPhone.val() !== "" && merchantAddress.val() !== "") {
+    
 
-  if (merchantName.val() !== "" && merchantPhone.val() !== "" && merchantAddress.val() !== "")
-  {
-    //opject merchants
     let merchantObj = {
+      id: Date.now(), 
       name: merchantName.val(),
       phone: merchantPhone.val(),
-      address:merchantAddress.val()
+      address: merchantAddress.val()
     };
+
+
     allMerchant.push(merchantObj);
     
-    localStorage.setItem("merchants", JSON.stringify(allMerchant));
-   clearInputValue();
-    displayMerchants();
-    let savedRole = localStorage.getItem("role");
-    if (savedRole === "user") {
-      $(".admin").hide();
-    } else if (savedRole === "admin") {
-      $(".admin").show();
-    }
 
-    
+    localStorage.setItem("merchants", JSON.stringify(allMerchant));
+
+    localStorage.setItem(`merchantData_${merchantObj.id}`, JSON.stringify([]));
+
+    clearInputValue();
+    displayMerchants();
+
   } else {
-    alert(" برجاء كتابة كل القيم للاضافة")
+    alert(" برجاء كتابة كل القيم للاضافة");
   }
-  
-})
+});
  
 function displayMerchants() {
 
@@ -150,7 +149,7 @@ function displayMerchants() {
 
     $("#tbodyMerchants").append(`
       <tr>
-        <td>${index + 1}</td>
+        <td>${index + 1}</td>findPriceLoc()
         <td class="merchantName">${merchant.name}</td>
         <td>${merchant.phone}</td>
         <td>${merchant.address}</td>
@@ -217,26 +216,56 @@ $("#updateBtn").click(() => {
 
 // delete merchant
 
+// delete merchant
 $(document).on("click", "#btnDelete", function () {
-  let deleteIndex = $(this).attr("data-id");
+  let index = $(this).data("id");
+  let merchant = allMerchant[index];
+  let merchantId = merchant.id;
 
-  allMerchant.splice(deleteIndex, 1);
-  localStorage.setItem("merchants", JSON.stringify(allMerchant));
+  if (confirm("هل أنت متأكد من حذف هذا التاجر؟")) {
 
-  localStorage.removeItem(`merchantData${deleteIndex}`); 
-  localStorage.removeItem(`merchantPrice${deleteIndex}`);
-  localStorage.removeItem(`spcMerchant_${deleteIndex}`); 
-
-  allMerchant.forEach((mer, i) => {
-    let oldData = JSON.parse(localStorage.getItem(`merchantData${i + 1}`));
-    if (oldData) {
-      localStorage.setItem(`merchantData${i}`, JSON.stringify(oldData));
-      localStorage.removeItem(`merchantData${i + 1}`);
+    for (let key in localStorage) {
+      if (
+        key.startsWith(`merchantData_${merchantId}`) || 
+        key.startsWith(`merchantData${index}`) ||      
+        key.startsWith(`merchantPrice${index}`)        
+      ) {
+        localStorage.removeItem(key);
+      }
     }
-  });
 
-  displayMerchants();
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith("merchantData") || key.startsWith("merchantPrice")) {
+        const data = JSON.parse(localStorage.getItem(key) || "null");
+        if (data && typeof data === "object") {
+          const jsonStr = JSON.stringify(data);
+          if (jsonStr.includes(merchant.name)) {
+            localStorage.removeItem(key);
+          }
+        }
+      }
+    });
+
+
+    allMerchant.splice(index, 1);
+    localStorage.setItem("merchants", JSON.stringify(allMerchant));
+
+
+    displayMerchants();
+
+
+    if (typeof updateTotals === "function") updateTotals();
+    if (typeof updateDashboard === "function") updateDashboard();
+    if (typeof calcTotalPaid === "function") calcTotalPaid();
+    if (typeof updateReports === "function") updateReports();
+
+    alert("تم حذف التاجر وكل بياناته بنجاح ");
+  }
 });
+
+
+
+
 
 
 
@@ -873,7 +902,10 @@ $(document).ready(function () {
 //** clear all data from localstorage**//
 
 $("#deleteAll").click(() => {
-  localStorage.clear()
+  if (confirm("هل أنت متأكد أنك تريد حذف جميع البيانات؟")) {
+    localStorage.clear();
+    location.reload();
+  }
 })
 
 
